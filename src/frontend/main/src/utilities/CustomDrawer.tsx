@@ -2,6 +2,21 @@ import * as React from 'react';
 import { Drawer } from 'rsuite';
 import CoreModules from '../shared/CoreModules';
 import AssetModules from '../shared/AssetModules';
+import OAuthPopup from './OAuthPopup.jsx';
+import axios from 'axios';
+
+
+
+
+
+
+//const clientId = "exTHbAF3HuyDknpsLPQ9WeLlIvXeUbQIIEZJhtcOoJ0"
+//const clientSecret = "b0qeqlLrY1B3jaW5XijlDTbtMo90jWF4do47XFQZLSE"
+
+//const oauthUrl = "https://www.openstreetmap.org/oauth2/authorize/?response_type=code&client_id="+ clientId +"&redirect_uri=https%3A%2F%2Ffmtm-api.hotosm.org%2Fauth%2Fcallback%2F&scope=read_prefs&state=kXFUAEEU1ijnuFTJmpUVFLr90E0r4p"
+
+
+
 
 const CustomDrawer = ({ open, placement, size, onClose }) => {
   const defaultTheme: any = CoreModules.useSelector<any>(state => state.theme.hotTheme)
@@ -10,11 +25,18 @@ const CustomDrawer = ({ open, placement, size, onClose }) => {
     element != null ? element.style.color = `${defaultTheme.palette.error['main']}` : null
   }
 
-  const onMouseLeave = (event) => {
+const onMouseLeave = (event) => {
     const element: any = document.getElementById(`text${event.target.id}`);
     element != null ? element.style.color = `${defaultTheme.palette.info['main']}` : null
 
   }
+
+const handleTokenReceived
+  = (token) => {
+    console.log(token)  
+
+  }
+
 
   const Drawerstyles = {
     list: {
@@ -82,6 +104,12 @@ const CustomDrawer = ({ open, placement, size, onClose }) => {
               })
             }
           </CoreModules.List>
+
+          <OAuthPopup 
+            buttonText="Authenticate with OAuth2"  
+            onTokenReceived={handleTokenReceived} 
+          />          
+          
           <CoreModules.Button
             variant="contained"
             color="error"
